@@ -1,9 +1,13 @@
 package com.mark.weatherapp;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -36,4 +40,47 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+}
+
+class RssItem {
+    private String title;
+    private String link;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+}
+
+class ParseRSS {
+    private XmlPullParserFactory xmlFactoryObject;
+    private XmlPullParser myparser;
+
+    public void handle() {
+        try {
+            xmlFactoryObject = XmlPullParserFactory.newInstance();
+            myparser = xmlFactoryObject.newPullParser();
+
+
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
 }
