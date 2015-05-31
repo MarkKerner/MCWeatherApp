@@ -4,10 +4,5 @@
 
     <string name="date_prompt">Vali kuupäev</string>
 
-    <string-array name="date_array">
-        <item>2015-05-30</item>
-        <item>2015-05-31</item>
-        <item>2015-06-01</item>
-        <item>2015-06-02</item>
-    </string-array>
+
 </resources>
