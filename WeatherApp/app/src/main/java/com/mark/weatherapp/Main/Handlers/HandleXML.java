@@ -2,7 +2,7 @@ package com.mark.weatherapp.Main.Handlers;
 
 import android.util.Log;
 
-import com.mark.weatherapp.Main.Date;
+import com.mark.weatherapp.Main.System.Date;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;

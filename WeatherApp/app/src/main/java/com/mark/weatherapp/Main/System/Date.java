@@ -1,10 +1,12 @@
-package com.mark.weatherapp.Main;
+package com.mark.weatherapp.Main.System;
 
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Date {
+public class Date implements Serializable {
+
     private String date;
     private Map<String, String> night;
     private Map<String, String> day;

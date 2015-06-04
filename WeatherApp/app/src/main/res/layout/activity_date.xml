@@ -1,0 +1,170 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:id="@+id/dayActivity"
+    android:weightSum="100">
+
+    <!-- Ülemise poole ülemine pool -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:layout_weight="20">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="40"
+            android:weightSum="100">
+
+            <TextView
+                android:id="@+id/tempDay_TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:textSize="30dp"
+                android:gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/temptextDay_TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="70"
+                android:textSize="10dp"
+                android:gravity="center_horizontal" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageDay"
+            android:layout_weight="60"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:src="@drawable/sun"/>
+    </LinearLayout>
+
+    <!-- Ülemise poole alumine pool -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="30"
+        android:weightSum="100">
+
+        <ImageView
+            android:layout_weight="40"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:gravity="start|center"
+            android:src="@drawable/wind" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:text="15-20 m/s"
+            android:textSize="15dp"
+            android:layout_weight="30"
+            android:gravity="start|center" />
+
+        <TextView
+            android:id="@+id/weathertextDay_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="20"
+            android:textSize="15dp"
+            android:gravity="start|center" />
+
+
+    </LinearLayout>
+
+    <!-- Eraldaja -->
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray" />
+
+
+    <!-- Alumise poole ülemine pool -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:layout_weight="20"
+        android:weightSum="100">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="40"
+            android:weightSum="100">
+
+            <TextView
+                android:id="@+id/tempNight_TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:textSize="30dp"
+                android:gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/temptextNight_TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="70"
+                android:textSize="10dp"
+                android:gravity="center_horizontal" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageNight"
+            android:layout_weight="60"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:src="@drawable/moon" />
+    </LinearLayout>
+
+    <!-- Alumise poole alumine pool -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="30"
+        android:weightSum="100">
+
+        <ImageView
+            android:layout_weight="40"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:gravity="start|center"
+            android:src="@drawable/wind" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:text="15-20 m/s"
+            android:textSize="15dp"
+            android:layout_weight="30"
+            android:gravity="start|center" />
+
+        <TextView
+            android:id="@+id/weathertextNight_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="20"
+            android:textSize="15dp"
+            android:gravity="start|center" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
