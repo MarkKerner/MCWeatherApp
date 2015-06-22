@@ -12,8 +12,8 @@ public class Date implements Serializable {
     private Map<String, String> day;
     private Map<Integer, String[]> windNight;
     private Map<Integer, String[]> windDay;
-    private Map<String, String[]> locationNight;
-    private Map<String, String[]> locationDay;
+    private Map<Integer, String[]> locationNight;
+    private Map<Integer, String[]> locationDay;
 
     public Date(String date) {
         this.date = date;
@@ -46,11 +46,11 @@ public class Date implements Serializable {
         return windDay;
     }
 
-    public Map<String, String[]> getLocationNight() {
+    public Map<Integer, String[]> getLocationNight() {
         return locationNight;
     }
 
-    public Map<String, String[]> getLocationDay() {
+    public Map<Integer, String[]> getLocationDay() {
         return locationDay;
     }
 

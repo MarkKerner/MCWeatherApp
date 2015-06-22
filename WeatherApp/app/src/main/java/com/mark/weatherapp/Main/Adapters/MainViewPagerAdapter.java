@@ -4,10 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.mark.weatherapp.Main.GUI.DayFourFragment;
-import com.mark.weatherapp.Main.GUI.DayOneFragment;
-import com.mark.weatherapp.Main.GUI.DayThreeFragment;
-import com.mark.weatherapp.Main.GUI.DayTwoFragment;
 import com.mark.weatherapp.Main.GUI.MainActivity;
 import com.mark.weatherapp.Main.GUI.SetViewValues;
 import com.mark.weatherapp.Main.System.Date;
@@ -15,33 +11,40 @@ import com.mark.weatherapp.Main.System.Date;
 import java.util.List;
 
 public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
+    private List<Fragment> mFragments;
+    private FragmentManager mFragmentManager;
+
     public MainViewPagerAdapter(FragmentManager fm) {
         super(fm);
+        this.mFragmentManager = fm;
+    }
+
+    public List<Fragment> getmFragments() {
+        return mFragments;
+    }
+
+    public void setmFragments(List<Fragment> mFragments) {
+        this.mFragments = mFragments;
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        if(mFragmentManager.getFragments().contains(object))
+            return POSITION_NONE;
+        else
+            return POSITION_UNCHANGED;
+        //return MainViewPagerAdapter.POSITION_NONE;
+
     }
 
     @Override
     public Fragment getItem(int i) {
-        Fragment fragment = null;
-        switch (i) {
-            case 0:
-                fragment = new DayOneFragment();
-                break;
-            case 1:
-                fragment = new DayTwoFragment();
-                break;
-            case 2:
-                fragment = new DayThreeFragment();
-                break;
-            case 3:
-                fragment = new DayFourFragment();
-                break;
-        }
-        return fragment;
+        return mFragments.get(i);
     }
 
     @Override
     public int getCount() {
-        return 4;
+        return mFragments.size();
     }
 
     @Override

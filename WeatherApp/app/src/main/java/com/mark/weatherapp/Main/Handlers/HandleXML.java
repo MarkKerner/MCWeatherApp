@@ -20,6 +20,7 @@ public class HandleXML {
     private XmlPullParserFactory xmlFactoryObject;
     public volatile boolean parsingComplete = true;
     private List<Date> dates;
+    public static volatile String enc = "pask";
 
     public HandleXML() {
         fetchXML();
@@ -50,6 +51,8 @@ public class HandleXML {
         String placeTempMin = null;
         String placeTempMax = null;
         int windLocationIndex = 0;
+        int placeLocationIndex = 0;
+
 
         try {
             event = myParser.getEventType();
@@ -68,6 +71,7 @@ public class HandleXML {
                             timeOfDay = "day";
                         } else if (name.equalsIgnoreCase("place")) {
                             notLocationSpecific = false;
+                            placeLocationIndex++;
                         } else if (name.equalsIgnoreCase("wind")) {
                             windData = true;
                             windLocationIndex++;
@@ -75,6 +79,7 @@ public class HandleXML {
                         break;
                     case XmlPullParser.TEXT:
                         text = myParser.getText();
+                        Log.e("tekst", text);
                         break;
                     case XmlPullParser.END_TAG:
 
@@ -100,20 +105,21 @@ public class HandleXML {
                             } else if (name.equalsIgnoreCase("tempmax")) {
                                 placeTempMax = text;
                             } else if (name.equalsIgnoreCase("place")) {
-                                notLocationSpecific = true;
-
                                 if (timeOfDay.equalsIgnoreCase("night")) {
                                     String[] locationData = {placePhenomenonNight, placeTempMin};
-                                    obj.getLocationNight().put(placeLocation, locationData);
+                                    obj.getLocationNight().put(placeLocationIndex, locationData);
                                 } else {
                                     String[] locationData = {placePhenomenonDay, placeTempMax};
-                                    obj.getLocationDay().put(placeLocation, locationData);
+                                    obj.getLocationDay().put(placeLocationIndex, locationData);
                                 }
+
+                                notLocationSpecific = true;
                             }
 
 
                         } else if (name.equalsIgnoreCase("night") || name.equalsIgnoreCase("day")) {
                             windLocationIndex = 0;
+                            placeLocationIndex = 0;
                         } else if (windData) {
                             // TODO: Remove direction, gust.
 
@@ -173,6 +179,8 @@ public class HandleXML {
                     // Starts the query
                     conn.connect();
                     InputStream stream = conn.getInputStream();
+
+                    enc = conn.getContentEncoding();
 
                     xmlFactoryObject = XmlPullParserFactory.newInstance();
                     xmlFactoryObject.setValidating(false);

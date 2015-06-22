@@ -22,7 +22,7 @@ public class DayFourFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_date, container, false);
-        Bundle args = getArguments();
+
 
         date = MainActivity.sObj.getDates().get(3);
 

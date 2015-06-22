@@ -74,7 +74,7 @@
             android:gravity="start|center" />
 
         <TextView
-            android:id="@+id/weathertextDay_TextView"
+            android:id="@+id/phenomenonDay_TextView"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_weight="20"
@@ -156,7 +156,7 @@
             android:gravity="start|center" />
 
         <TextView
-            android:id="@+id/weathertextNight_TextView"
+            android:id="@+id/phenomenonNight_TextView"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_weight="20"
