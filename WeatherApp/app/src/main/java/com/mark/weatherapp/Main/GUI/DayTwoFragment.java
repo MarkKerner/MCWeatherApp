@@ -24,7 +24,7 @@ public class DayTwoFragment extends android.support.v4.app.Fragment {
         View v = inflater.inflate(R.layout.activity_date, container, false);
         Bundle args = getArguments();
 
-        date = (Date) args.getSerializable("day2");
+        date = MainActivity.sObj.getDates().get(1);
 
         SetViewValues.setValues(date, v);
         return v;

@@ -1,8 +1,5 @@
 package com.mark.weatherapp.Main.System;
 
-/**
- * Created by Mark on 4.06.2015.
- */
 public class NumbersToText {
     // This snippet may be used freely, as long as the authorship note remains
     // in the source code.

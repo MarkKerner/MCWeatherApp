@@ -23,7 +23,7 @@ public class DayOneFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_date, container, false);
         Bundle args = getArguments();
-        date = (Date) args.getSerializable("day1");
+        date = MainActivity.sObj.getDates().get(0);
         SetViewValues.setValues(date, v);
         return v;
     }

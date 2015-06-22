@@ -1,115 +1,100 @@
 package com.mark.weatherapp.Main.GUI;
 
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTabHost;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
+import com.mark.weatherapp.Main.Adapters.MainViewPagerAdapter;
 import com.mark.weatherapp.Main.Handlers.HandleXML;
+import com.mark.weatherapp.Main.Listeners.LocationSpinnerListener;
 import com.mark.weatherapp.R;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
-    private FragmentTabHost mTabHost;
-    private static HandleXML mObj;
-    public static final Map<String, String> PHENOMEN_MAP =
-            new HashMap<>();
-    static {
-        PHENOMEN_MAP.put("Clear","Selge");
-        PHENOMEN_MAP.put("Few clouds","Vähene pilvisus");
-        PHENOMEN_MAP.put("Variable clouds","Vahelduv pilvisus");
-        PHENOMEN_MAP.put("Cloudy with clear spells","Pilves selginemistega");
-        PHENOMEN_MAP.put("Cloudy","Pilves");
-        PHENOMEN_MAP.put("Light snow shower","Nõrk hooglumi");
-        PHENOMEN_MAP.put("Moderate snow shower","Mõõdukas hooglumi");
-        PHENOMEN_MAP.put("Heavy snow shower","Tugev hooglumi");
-        PHENOMEN_MAP.put("Light shower","Nõrk hoogvihm");
-        PHENOMEN_MAP.put("Moderate shower","Keskmine hoogvihm");
-        PHENOMEN_MAP.put("Heavy shower","Tugev hoogvihm");
-        PHENOMEN_MAP.put("Light rain","Nõrk vihm");
-        PHENOMEN_MAP.put("Moderate rain","Mõõdukas vihm");
-        PHENOMEN_MAP.put("Heavy rain","Tugev vihm");
-        PHENOMEN_MAP.put("Risk of glaze","Jäiteoht");
-        PHENOMEN_MAP.put("Light sleet","Nõrk lörtsisadu");
-        PHENOMEN_MAP.put("Moderate sleet","Mõõdukas lörtisadu");
-        PHENOMEN_MAP.put("Light snowfall","Nõrk lumesadu");
-        PHENOMEN_MAP.put("Moderate snowfall","Mõõdukas lumesadu");
-        PHENOMEN_MAP.put("Heavy snowfall","Tugev lumesadu");
-        PHENOMEN_MAP.put("Snowstorm","Üldtuisk");
-        PHENOMEN_MAP.put("Drifting snow","Pinnatuisk");
-        PHENOMEN_MAP.put("Hail","Rahe");
-        PHENOMEN_MAP.put("Mist","Uduvine");
-        PHENOMEN_MAP.put("Fog","Udu");
-        PHENOMEN_MAP.put("Thunder","Äike");
-        PHENOMEN_MAP.put("Thunderstorm","Äikesetorm");
-    }
+
+    public static HandleXML sObj;
+    public static Location sLastKnownLocation;
+    private MainViewPagerAdapter mMainViewPagerAdapter;
+    private ViewPager mViewPager;
+    private Toolbar mToolbar;
+    private SlidingTabLayout mSlidingTabs;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
-        DayOneFragment da = new DayOneFragment();
-
         Log.e("WeatherApp", "Layout tehtud");
-        mObj = new HandleXML();
+        sObj = new HandleXML();
         Log.e("WeatherApp", "fetchXML tehtud");
-        while (mObj.parsingComplete) ;
+        while (sObj.parsingComplete) ;
         Log.e("WeatherApp", "Parsing tehtud");
-        sendDataToFragments();
+
+
+
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        sLastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        Log.e("location", sLastKnownLocation.toString());
+
+
+
+        mToolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(mToolbar);
+
+        setSpinnerValues();
+
+
+        mSlidingTabs = (SlidingTabLayout) findViewById(R.id.tabs);
+        mSlidingTabs.setDistributeEvenly(true);
+        mSlidingTabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.tabsScrollColor);
+            }
+        });
+        mSlidingTabs.setViewPager(mViewPager);
+
+
     }
 
-    private void sendDataToFragments() {
-        Bundle bundle;
+    private void setViewPagerAdapter() {
 
-        mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
-        mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
+        mMainViewPagerAdapter =
+                new MainViewPagerAdapter(
+                        getSupportFragmentManager());
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mMainViewPagerAdapter);
 
-        Log.e("WeatherApp", "Setup tehtud");
+    }
 
-        for (int i = 0; i < 4; i++) {
+    private void setSpinnerValues() {
+        Spinner locationSpinner = (Spinner) findViewById(R.id.location_spinner);
+        List<String> locationList = new ArrayList<>();
 
-            bundle = new Bundle();
-
-            bundle.putSerializable("day" + (i + 1), mObj.getDates().get(i));
-            Log.e("SendData", "day" + (i + 1));
-
-            switch (i) {
-                case 0:
-                    mTabHost.addTab(
-                            mTabHost.newTabSpec("day1").setIndicator(mObj.getDates().get(0).getDate(), null),
-                            DayOneFragment.class, bundle);
-                    Log.e("Switch", "day" + (i + 1));
-                    break;
-                case 1:
-                    mTabHost.addTab(
-                            mTabHost.newTabSpec("day2").setIndicator(mObj.getDates().get(1).getDate(), null),
-                            DayTwoFragment.class, bundle);
-                    Log.e("Switch", "day" + (i + 1));
-                    break;
-                case 2:
-                    mTabHost.addTab(
-                            mTabHost.newTabSpec("day3").setIndicator(mObj.getDates().get(2).getDate(), null),
-                            DayThreeFragment.class, bundle);
-                    Log.e("Switch", "day" + (i + 1));
-                    break;
-                case 3:
-                    mTabHost.addTab(
-                            mTabHost.newTabSpec("day4").setIndicator(mObj.getDates().get(3).getDate(), null),
-                            DayFourFragment.class, bundle);
-                    Log.e("Switch", "day" + (i + 1));
-                    break;
-            }
-
-            Log.e("SendData", (i + 1) + ". tab tehtud");
+        for (String location : sObj.getDates().get(0).getLocationNight().keySet()) {
+            locationList.add(location);
         }
+
+        ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, locationList);
+        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        locationSpinner.setAdapter(locationAdapter);
+
+        locationSpinner.setOnItemSelectedListener(new LocationSpinnerListener());
+
     }
 
     @Override

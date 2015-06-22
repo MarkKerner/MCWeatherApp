@@ -66,9 +66,9 @@
             android:src="@drawable/wind" />
 
         <TextView
+            android:id="@+id/windDay_TextView"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:text="15-20 m/s"
             android:textSize="15dp"
             android:layout_weight="30"
             android:gravity="start|center" />
@@ -148,9 +148,9 @@
             android:src="@drawable/wind" />
 
         <TextView
+            android:id="@+id/windNight_TextView"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:text="15-20 m/s"
             android:textSize="15dp"
             android:layout_weight="30"
             android:gravity="start|center" />
