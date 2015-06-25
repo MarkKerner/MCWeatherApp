@@ -31,6 +31,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public static final String LAST_LOCATION_NAME = "LastLocationFile";
+    public static final String LAST_SAVED_LOCATION = "LastSavedLocation";
 
     public static HandleXML sRSSObj;
     public static Location sLastKnownLocation;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private int mLastLocationSpinnerIndex;
     private Location mLastPosition;
     private LocationManager mLocationManager;
-    private boolean canGetLocation = false;
+    private boolean canGetLocation = true;
 
 
     @Override
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         getLocationData();
 
         //Määrab RSS voo põhjal spinneri elemendid
-        setSpinnerValues();
+        setSpinnerValues(savedInstanceState);
 
         //Teeb tabid
         makeSlidingTabs();
@@ -80,10 +81,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void getLocationData() {
-        sLastKnownLocation = getLocation();
-
         //Kui asukohta pole võimalik saada, aga taastati vana asukoht, kasutatakse seda. Kui vana asukohta ka pole, pannakse asukohaks Kuusiku.
-        if (canGetLocation == false && mLastPosition != null) {
+        Location tempLocation = getLocation();
+        if (canGetLocation == true && tempLocation != null) {
+            sLastKnownLocation = tempLocation;
+        } else if (canGetLocation == false && mLastPosition != null) {
             sLastKnownLocation = mLastPosition;
         } else {
             Log.d("Location", "No location data available, set default");
@@ -111,9 +113,9 @@ public class MainActivity extends AppCompatActivity {
 
             if (!isGPSEnabled && !isNetworkEnabled) {
                 // no network provider is enabled
-
+                canGetLocation = false;
             } else {
-                canGetLocation = true;
+
                 if (isNetworkEnabled) {
                     mLocationManager.requestLocationUpdates(
                             LocationManager.NETWORK_PROVIDER,
@@ -215,9 +217,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences(LAST_LOCATION_NAME, MODE_PRIVATE);
 
         //Taastab viimase spinner asukoha
-        mLastLocationSpinnerIndex = settings.getInt("last__spinnerlocation", 0);
+        mLastLocationSpinnerIndex = settings.getInt("last_spinner_location", 0);
+        Log.d("spinner selection saved", Integer.toString(mLastLocationSpinnerIndex));
         if (mLastLocationSpinnerIndex > 6 || mLastLocationSpinnerIndex < 0) {
             mLastLocationSpinnerIndex = 0;
+            Log.d("spinner selection", "set 0");
         }
 
         //Taastab viimase kasutaja asukoha, kui see oli olemas
@@ -236,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Määrab spinner väärtused ja selekteerib eelnevalt valitud asukoha
      */
-    private void setSpinnerValues() {
+    private void setSpinnerValues(Bundle savedInstanceState) {
         mLocationSpinner = (Spinner) findViewById(R.id.location_spinner);
 
 
@@ -284,8 +288,16 @@ public class MainActivity extends AppCompatActivity {
                 //Alati on midagi valitud, nii et see meetod ei ole vajalik
             }
         });
+        if (savedInstanceState != null) {
+            mLocationSpinner.setSelection(savedInstanceState.getInt(LAST_SAVED_LOCATION, 1));
+            Log.d("spinner selection", "savedInstanceState");
+        } else {
 
-        mLocationSpinner.setSelection(mLastLocationSpinnerIndex);
+            mLocationSpinner.setSelection(mLastLocationSpinnerIndex);
+            Log.d("spinner selection", "preferencedeData");
+        }
+
+
         sLocationName = mLocationSpinner.getSelectedItem().toString();
     }
 
@@ -323,7 +335,18 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("last_spinner_location", mLocationSpinner.getSelectedItemPosition());
         editor.putFloat("last_position_lat", (float) sLastKnownLocation.getLatitude());
         editor.putFloat("last_position_lon", (float) sLastKnownLocation.getLongitude());
-
+        Log.d("spinner selection", "stop save as " + mLocationSpinner.getSelectedItemPosition());
         editor.commit();
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+        savedInstanceState.putInt(LAST_SAVED_LOCATION, mLocationSpinner.getSelectedItemPosition());
+        Log.d("spinner selection", "SAVE instancestate");
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+
 }

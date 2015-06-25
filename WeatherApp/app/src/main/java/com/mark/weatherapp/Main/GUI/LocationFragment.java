@@ -24,7 +24,13 @@ public class LocationFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.activity_location, container, false);
 
-        int locationIndex = SetViewValues.LOCATION_MAP_REVERSED.get(MainActivity.sLocationName);
+
+
+
+            int locationIndex = SetViewValues.LOCATION_MAP_REVERSED.get(MainActivity.sLocationName);
+
+
+
 
         SetViewValues.setLocationValues(locationIndex, v);
 
