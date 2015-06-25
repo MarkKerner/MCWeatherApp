@@ -1,0 +1,150 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="2">
+
+
+    <!-- Sarnane ülesehitus ja kommentaarid, mis 'activity_maindate'-s -->
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:elevation="1dp"
+        android:layout_weight="1"
+        android:paddingTop="5dp"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/img_phen_layout_day"
+                android:paddingLeft="20dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/imageDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sun" />
+
+                <TextView
+                    android:fontFamily="sans-serif-thin"
+                    android:id="@+id/phenomenonDay_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:id="@+id/temp_layout_day"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="15dp"
+                android:layout_toRightOf="@id/img_phen_layout_day">
+
+                <TextView
+                    android:fontFamily="sans-serif-thin"
+                    android:id="@+id/tempDay_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="65dp"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    android:fontFamily="sans-serif-thin"
+                    android:id="@+id/temptextDay_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10dp"
+                    android:layout_gravity="center_horizontal" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:elevation="1dp"
+        android:layout_weight="1"
+        android:paddingBottom="5dp"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/img_phen_layout"
+                android:paddingLeft="20dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/imageNight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/fullmoon" />
+
+                <TextView
+                    android:fontFamily="sans-serif-thin"
+                    android:id="@+id/phenomenonNight_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:id="@+id/temp_layout"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="15dp"
+                android:layout_toRightOf="@id/img_phen_layout">
+
+                <TextView
+                    android:fontFamily="sans-serif-thin"
+                    android:id="@+id/tempNight_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="65dp"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    android:fontFamily="sans-serif-thin"
+                    android:id="@+id/temptextNight_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10dp"
+                    android:layout_gravity="center_horizontal" />
+            </LinearLayout>
+
+
+
+
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
