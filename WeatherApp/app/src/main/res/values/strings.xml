@@ -1,8 +1,4 @@
 <resources>
-    <string name="app_name">WeatherApp</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="date_prompt">Vali kuupäev</string>
-
-
+    <string name="app_name">Ilmakas</string>
+    <string name="action_about">About</string>
 </resources>

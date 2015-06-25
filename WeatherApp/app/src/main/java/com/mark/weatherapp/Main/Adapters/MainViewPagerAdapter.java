@@ -10,17 +10,17 @@ import com.mark.weatherapp.Main.System.Date;
 
 import java.util.List;
 
+/**
+ * ViewPager-i adapter fragmentide vahetamiseks, muutmiseks.
+ */
 public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> mFragments;
     private FragmentManager mFragmentManager;
 
-    public MainViewPagerAdapter(FragmentManager fm) {
+    public MainViewPagerAdapter(FragmentManager fm, List fragments) {
         super(fm);
         this.mFragmentManager = fm;
-    }
-
-    public List<Fragment> getmFragments() {
-        return mFragments;
+        this.mFragments = fragments;
     }
 
     public void setmFragments(List<Fragment> mFragments) {
@@ -29,12 +29,10 @@ public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getItemPosition(Object object) {
-        if(mFragmentManager.getFragments().contains(object))
+        if (mFragmentManager.getFragments().contains(object))
             return POSITION_NONE;
         else
             return POSITION_UNCHANGED;
-        //return MainViewPagerAdapter.POSITION_NONE;
-
     }
 
     @Override
@@ -50,7 +48,7 @@ public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
 
-        List<Date> dates = MainActivity.sObj.getDates();
+        List<Date> dates = MainActivity.sRSSObj.getDates();
 
         return SetViewValues.makeTitle(dates.get(position).getDate());
 

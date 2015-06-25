@@ -89,32 +89,25 @@ public class SetViewValues {
 
     }
 
-    private static final double latKuusiku = 59.215230;
-    private static final double lonKuusiku = 24.693471;
-    private static final double latVMaarja = 59.126264;
-    private static final double lonVMaarja = 26.249074;
-    private static final double latVõrtsjärv = 58.277105;
-    private static final double lonVõrtsjärv = 26.063440;
-
-    private static final Location locationKuusiku = new Location("Kuusiku");
+    public static final Location LOCATION_KUUSIKU = new Location("Kuusiku");
 
     static {
-        locationKuusiku.setLatitude(59.215230);
-        locationKuusiku.setLongitude(24.693471);
+        LOCATION_KUUSIKU.setLatitude(59.215230);
+        LOCATION_KUUSIKU.setLongitude(24.693471);
     }
 
-    private static final Location locationVMaarja = new Location("Väike-Maarja");
+    public static final Location LOCATION_V_MAARJA = new Location("Väike-Maarja");
 
     static {
-        locationVMaarja.setLatitude(59.126264);
-        locationVMaarja.setLongitude(26.249074);
+        LOCATION_V_MAARJA.setLatitude(59.126264);
+        LOCATION_V_MAARJA.setLongitude(26.249074);
     }
 
-    private static final Location locationVõrtsjärv = new Location("Võrtsjärv");
+    public static final Location LOCATION_VÕRTSJÄRV = new Location("Võrtsjärv");
 
     static {
-        locationVõrtsjärv.setLatitude(58.277105);
-        locationVõrtsjärv.setLongitude(26.063440);
+        LOCATION_VÕRTSJÄRV.setLatitude(58.277105);
+        LOCATION_VÕRTSJÄRV.setLongitude(26.063440);
     }
 
 
@@ -126,39 +119,44 @@ public class SetViewValues {
         return dateStringOut;
     }
 
+
+    //Seab asukohtade fragmentide väärtused vastavalt spinneri valikule
     public static void setLocationValues(int locationIndex, View v) {
 
-        TextView locationNameView;
         TextView phenomenonDayView;
         TextView phenomenonNightView;
-        TextView tempView;
+        TextView tempDayView;
+        TextView tempNightView;
+        TextView temptextDayView;
+        TextView temptextNightView;
         String phenomenonDay;
         String phenomenonNight;
         String tempMin;
         String tempMax;
 
-        locationNameView = (TextView) v.findViewById(R.id.locationName_TextView);
         phenomenonDayView = (TextView) v.findViewById(R.id.locationPhenomenonDay_TextView);
         phenomenonNightView = (TextView) v.findViewById(R.id.locationPhenomenonNight_TextView);
-        tempView = (TextView) v.findViewById(R.id.locationTemperature_TextView);
+        tempDayView = (TextView) v.findViewById(R.id.locationTempDay_TextView);
+        tempNightView = (TextView) v.findViewById(R.id.locationTempNight_TextView);
+        temptextDayView = (TextView) v.findViewById(R.id.locationTemptextDay_TextView);
+        temptextNightView = (TextView) v.findViewById(R.id.locationTemptextNight_TextView);
 
-        locationNameView.setText(LOCATION_MAP.get(locationIndex));
-        phenomenonDay = PHENOMENON_MAP.get(MainActivity.sObj.getDates().get(0).getLocationDay().get(locationIndex)[0]);
-        tempMax = MainActivity.sObj.getDates().get(0).getLocationDay().get(locationIndex)[1];
-        phenomenonNight = PHENOMENON_MAP.get(MainActivity.sObj.getDates().get(0).getLocationNight().get(locationIndex)[0]);
-        tempMin = MainActivity.sObj.getDates().get(0).getLocationNight().get(locationIndex)[1];
+        phenomenonDay = PHENOMENON_MAP.get(MainActivity.sRSSObj.getDates().get(0).getLocationDay().get(locationIndex)[0]);
+        tempMax = MainActivity.sRSSObj.getDates().get(0).getLocationDay().get(locationIndex)[1];
+        phenomenonNight = PHENOMENON_MAP.get(MainActivity.sRSSObj.getDates().get(0).getLocationNight().get(locationIndex)[0]);
+        tempMin = MainActivity.sRSSObj.getDates().get(0).getLocationNight().get(locationIndex)[1];
 
 
         phenomenonDayView.setText(phenomenonDay);
         phenomenonNightView.setText(phenomenonNight);
-        tempView.setText(tempMin + ".." + tempMax);
-
-        Log.e("hmm", locationNameView.getText().toString());
-        Log.e("setViewvalues", "y" + locationIndex);
-
+        tempDayView.setText(tempMax);
+        tempNightView.setText(tempMin);
+        temptextDayView.setText(NumbersToText.parse(Integer.parseInt(tempMax)) + " kraadi");
+        temptextNightView.setText(NumbersToText.parse(Integer.parseInt(tempMin)) + " kraadi");
 
     }
 
+    //Selle meetodi abil antakse väärtused Eesti üldistele andmetele neljal kuupäeval. Esimsele kuupäeval antakse ka tuule tugevus vastavalt GPS-i asukohale.
     public static void setValues(Date date, View v) {
         TextView tempViewDay;
         TextView tempViewNight;
@@ -168,8 +166,8 @@ public class SetViewValues {
         TextView temptextViewNight;
         TextView windViewDay;
         TextView windViewNight;
-        String tempmin;
-        String tempmax;
+        String tempMin;
+        String tempMax;
         String phenomenon;
         String tempText;
         Location userLocation;
@@ -186,22 +184,20 @@ public class SetViewValues {
         windViewNight = (TextView) v.findViewById(R.id.windNight_TextView);
 
 
-        if (date.getDate().equalsIgnoreCase(MainActivity.sObj.getDates().get(0).getDate())) {
-            /**userLocation = MainActivity.sLastKnownLocation;
-             minDistance = userLocation.distanceTo(locationKuusiku);
-             closestWindDataLocation = 1;
-             if (userLocation.distanceTo(locationVMaarja) < minDistance) {
-             minDistance = userLocation.distanceTo(locationVMaarja);
-             closestWindDataLocation = 2;
-             }
-             if (userLocation.distanceTo(locationVõrtsjärv) < minDistance) {
-             closestWindDataLocation = 3;
-             }
-
-             Log.e("closestLocation", Integer.toString(closestWindDataLocation));**/
-
-
+        if (date.getDate().equalsIgnoreCase(MainActivity.sRSSObj.getDates().get(0).getDate())) {
+            userLocation = MainActivity.sLastKnownLocation;
+            minDistance = userLocation.distanceTo(LOCATION_KUUSIKU);
             closestWindDataLocation = 1;
+            if (userLocation.distanceTo(LOCATION_V_MAARJA) < minDistance) {
+                minDistance = userLocation.distanceTo(LOCATION_V_MAARJA);
+                closestWindDataLocation = 2;
+            }
+            if (userLocation.distanceTo(LOCATION_VÕRTSJÄRV) < minDistance) {
+                closestWindDataLocation = 3;
+            }
+
+            Log.d("closestLocation", Integer.toString(closestWindDataLocation));
+
             String[] windInfoDay = date.getWindDay().get(closestWindDataLocation);
             String[] windInfoNight = date.getWindNight().get(closestWindDataLocation);
 
@@ -209,25 +205,23 @@ public class SetViewValues {
             windViewNight.setText(windInfoNight[1] + ".." + windInfoNight[2] + " m/s");
         }
 
-        tempmin = date.getDay().get("tempmin");
-        tempmax = date.getDay().get("tempmax");
+        tempMin = date.getDay().get("tempmin");
+        tempMax = date.getDay().get("tempmax");
         phenomenon = PHENOMENON_MAP.get(date.getDay().get("phenomenon"));
-        tempText = NumbersToText.parse(Integer.parseInt(tempmin)) + " kuni " + NumbersToText.parse(Integer.parseInt(tempmax)) + " kraadi";
+        tempText = NumbersToText.parse(Integer.parseInt(tempMin)) + " kuni " + NumbersToText.parse(Integer.parseInt(tempMax)) + " kraadi";
 
-        tempViewDay.setText(tempmin + ".." + tempmax);
+        tempViewDay.setText(tempMin + ".." + tempMax);
         temptextViewDay.setText(tempText);
         weathertextViewDay.setText(phenomenon);
 
-        tempmin = date.getNight().get("tempmin");
-        tempmax = date.getNight().get("tempmax");
+        tempMin = date.getNight().get("tempmin");
+        tempMax = date.getNight().get("tempmax");
         phenomenon = PHENOMENON_MAP.get(date.getNight().get("phenomenon"));
 
-        tempText = NumbersToText.parse(Integer.parseInt(tempmin)) + " kuni " + NumbersToText.parse(Integer.parseInt(tempmax)) + " kraadi";
+        tempText = NumbersToText.parse(Integer.parseInt(tempMin)) + " kuni " + NumbersToText.parse(Integer.parseInt(tempMax)) + " kraadi";
 
-        tempViewNight.setText(tempmin + ".." + tempmax);
+        tempViewNight.setText(tempMin + ".." + tempMax);
         temptextViewNight.setText(tempText);
         weatherTextViewNight.setText(phenomenon);
-
-        Log.e("setviewvalues", "x");
     }
 }

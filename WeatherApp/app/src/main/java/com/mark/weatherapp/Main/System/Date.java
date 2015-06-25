@@ -5,14 +5,27 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Date implements Serializable {
 
+public class Date implements Serializable {
+    //Kuupäev stringina
     private String date;
+
+    //Ilmainfo öö kohta Eestis
     private Map<String, String> night;
+
+    //Ilmainfo päeva kohta Eestis
     private Map<String, String> day;
+
+    //Tuule info öö kohta Eestis
     private Map<Integer, String[]> windNight;
+
+    //Tuule info päeva kohta Eestis
     private Map<Integer, String[]> windDay;
+
+    //Ilmainfo asukoha kohta öösel
     private Map<Integer, String[]> locationNight;
+
+    //Ilmainfo asukohta kohta päeval
     private Map<Integer, String[]> locationDay;
 
     public Date(String date) {

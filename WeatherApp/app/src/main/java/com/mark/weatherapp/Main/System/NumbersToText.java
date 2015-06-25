@@ -3,6 +3,10 @@ package com.mark.weatherapp.Main.System;
 public class NumbersToText {
     // This snippet may be used freely, as long as the authorship note remains
     // in the source code.
+    //@author Christian d'Heureuse, Inventec Informatik AG, Switzerland,
+    //www.source-code.biz
+
+    //Klass numbrite teisendamiseks sõnedesse.
 
     private static final String[] lowNames = {"null", "üks", "kaks", "kolm",
             "neli", "viis", "kuus", "seitse", "kaheksa", "üheksa", "kümme",
@@ -16,10 +20,6 @@ public class NumbersToText {
     private static final String[] bigNames = {"tuhat", "miljon", "miljard"};
 
 
-    /*
-    * @author Christian d'Heureuse, Inventec Informatik AG, Switzerland,
-    *         www.source-code.biz
-    **/
     public static String parse(int n) {
         return convertNumberToWords(n);
     }

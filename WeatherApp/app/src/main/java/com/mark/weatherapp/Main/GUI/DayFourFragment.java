@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import com.mark.weatherapp.Main.System.Date;
 import com.mark.weatherapp.R;
 
-
+/**
+ * Fragment, mis luuakse neljanda päeva korral
+ */
 public class DayFourFragment extends android.support.v4.app.Fragment {
     Date date;
 
@@ -21,10 +23,10 @@ public class DayFourFragment extends android.support.v4.app.Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_date, container, false);
+        View v = inflater.inflate(R.layout.activity_secondarydates, container, false);
 
 
-        date = MainActivity.sObj.getDates().get(3);
+        date = MainActivity.sRSSObj.getDates().get(3);
 
         SetViewValues.setValues(date, v);
         return v;

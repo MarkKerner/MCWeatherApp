@@ -1,7 +1,6 @@
 package com.mark.weatherapp.Main.Handlers;
 
 import android.util.Log;
-import android.util.Xml;
 
 import com.mark.weatherapp.Main.System.Date;
 
@@ -20,7 +19,6 @@ public class HandleXML {
     private XmlPullParserFactory xmlFactoryObject;
     public volatile boolean parsingComplete = true;
     private List<Date> dates;
-    public static volatile String enc = "pask";
 
     public HandleXML() {
         fetchXML();
@@ -40,12 +38,10 @@ public class HandleXML {
         Date obj = null;
         boolean notLocationSpecific = true;
         boolean windData = false;
-        String windLocation = null;
         String windDirection = null;
         String windSpeedMin = null;
         String windSpeedMax = null;
         String windGust = null;
-        String placeLocation = null;
         String placePhenomenonNight = null;
         String placePhenomenonDay = null;
         String placeTempMin = null;
@@ -53,7 +49,7 @@ public class HandleXML {
         int windLocationIndex = 0;
         int placeLocationIndex = 0;
 
-
+        //Parsimisloogika. Andmete salvestamiseks luuakse Date objektidest List.
         try {
             event = myParser.getEventType();
             while (event != XmlPullParser.END_DOCUMENT) {
@@ -79,7 +75,6 @@ public class HandleXML {
                         break;
                     case XmlPullParser.TEXT:
                         text = myParser.getText();
-                        Log.e("tekst", text);
                         break;
                     case XmlPullParser.END_TAG:
 
@@ -93,7 +88,6 @@ public class HandleXML {
                             }
                         } else if (!notLocationSpecific) {
                             if (name.equalsIgnoreCase("name")) {
-                                placeLocation = text;
                             } else if (name.equalsIgnoreCase("phenomenon")) {
                                 if (timeOfDay.equalsIgnoreCase("night")) {
                                     placePhenomenonNight = text;
@@ -123,9 +117,7 @@ public class HandleXML {
                         } else if (windData) {
                             // TODO: Remove direction, gust.
 
-                            if (name.equalsIgnoreCase("name")) {
-                                windLocation = text;
-                            } else if (name.equalsIgnoreCase("direction")) {
+                            if (name.equalsIgnoreCase("direction")) {
                                 windDirection = text;
                             } else if (name.equalsIgnoreCase("speedmin")) {
                                 windSpeedMin = text;
@@ -136,8 +128,6 @@ public class HandleXML {
                             } else if (name.equalsIgnoreCase("wind")) {
                                 windData = false;
                                 String[] windLocationData = {windDirection, windSpeedMin, windSpeedMax, windGust};
-                                Log.e("tuuleasukoht", windLocation);
-                                Log.e("tuuleindex", Integer.toString(windLocationIndex));
 
                                 if (timeOfDay.equalsIgnoreCase("night")) {
                                     obj.getWindNight().put(windLocationIndex, windLocationData);
@@ -153,13 +143,16 @@ public class HandleXML {
             }
 
 
-            Log.e("Päevad", dates.toString());
+            Log.d("Päevad", dates.toString());
             parsingComplete = false;
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Alsutab uue threadi, milles luuakse ühendus veebilehega ja saadetakse tegevus edasi parsimismeetodile
+     */
     public void fetchXML() {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -180,16 +173,12 @@ public class HandleXML {
                     conn.connect();
                     InputStream stream = conn.getInputStream();
 
-                    enc = conn.getContentEncoding();
-
                     xmlFactoryObject = XmlPullParserFactory.newInstance();
-                    xmlFactoryObject.setValidating(false);
-                    xmlFactoryObject.setFeature(Xml.FEATURE_RELAXED, true);
-                    xmlFactoryObject.setNamespaceAware(true);
-
                     XmlPullParser myparser = xmlFactoryObject.newPullParser();
-                    //myparser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-                    myparser.setInput(new InputStreamReader(stream, "UTF-8"));
+
+                    myparser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+
+                    myparser.setInput(new InputStreamReader(stream, "ISO-8859-1"));
 
                     parseXMLAndStoreIt(myparser);
                     stream.close();

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.mark.weatherapp.R;
 
 /**
- * Created by Mark on 22.06.2015.
+ * Fragment, mis luuakse asukohapõhise kuva korral
  */
 public class LocationFragment extends Fragment {
 
