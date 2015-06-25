@@ -3,6 +3,7 @@ package com.mark.weatherapp.Main.GUI;
 import android.location.Location;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mark.weatherapp.Main.System.Date;
@@ -70,6 +71,72 @@ public class SetViewValues {
         PHENOMENON_MAP.put("Thunderstorm", "Äikesetorm");
     }
 
+    private static final Map<String, Integer> PHENOMENON_TO_IMAGE_MAP_DAY =
+            new HashMap<>();
+
+    static {
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Clear", R.drawable.sun);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Few clouds", R.drawable.sun_minimal_clouds);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Variable clouds", R.drawable.cloud_sun);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Cloudy with clear spells", R.drawable.cloud_sun);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Cloudy", R.drawable.sun_maximum_clouds);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Light snow shower", R.drawable.sun_flurrie);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Moderate snow shower", R.drawable.sun_medium_snow);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Heavy snow shower", R.drawable.sun_and_snow);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Light shower", R.drawable.sun_and_rain);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Moderate shower", R.drawable.sun_medium_rain);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Heavy shower", R.drawable.sun_medium_rain);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Light rain", R.drawable.medium_rain);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Moderate rain", R.drawable.medium_rain);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Heavy rain", R.drawable.rain);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Risk of glaze", R.drawable.snow);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Light sleet", R.drawable.sun_flurrie);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Moderate sleet", R.drawable.sun_flurrie);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Light snowfall", R.drawable.sun_flurrie);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Moderate snowfall", R.drawable.sun_medium_snow);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Heavy snowfall", R.drawable.sun_and_snow);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Snowstorm", R.drawable.sun_and_snow);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Drifting snow", R.drawable.sun_and_snow);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Hail", R.drawable.medium_ice);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Mist", R.drawable.wind);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Fog", R.drawable.wind);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Thunder", R.drawable.cloud_thunder_rain);
+        PHENOMENON_TO_IMAGE_MAP_DAY.put("Thunderstorm", R.drawable.cloud_thunder_rain);
+    }
+
+    private static final Map<String, Integer> PHENOMENON_TO_IMAGE_MAP_NIGHT =
+            new HashMap<>();
+
+    static {
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Clear", R.drawable.fullmoon);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Few clouds", R.drawable.moon_cloud);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Variable clouds", R.drawable.moon_cloud_medium);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Cloudy with clear spells", R.drawable.moon_cloud_medium);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Cloudy", R.drawable.moon_cloud_medium);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Light snow shower", R.drawable.night_flurry);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Moderate snow shower", R.drawable.night_and_snow);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Heavy snow shower", R.drawable.night_and_snow);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Light shower", R.drawable.night_rain);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Moderate shower", R.drawable.night_rain);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Heavy shower", R.drawable.night_rain);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Light rain", R.drawable.night_rain);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Moderate rain", R.drawable.night_rain);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Heavy rain", R.drawable.night_rain);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Risk of glaze", R.drawable.night_and_snow);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Light sleet", R.drawable.night_flurry);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Moderate sleet", R.drawable.night_and_snow);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Light snowfall", R.drawable.night_flurry);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Moderate snowfall", R.drawable.night_and_snow);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Heavy snowfall", R.drawable.night_and_snow);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Snowstorm", R.drawable.night_and_snow);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Drifting snow", R.drawable.night_and_snow);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Hail", R.drawable.medium_ice);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Mist", R.drawable.wind);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Fog", R.drawable.wind);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Thunder", R.drawable.cloud_thunder_rain);
+        PHENOMENON_TO_IMAGE_MAP_NIGHT.put("Thunderstorm", R.drawable.cloud_thunder_rain);
+    }
+
     private static final Map<String, String> DATENAME_MAP =
             new HashMap<>();
 
@@ -114,15 +181,12 @@ public class SetViewValues {
     public static CharSequence makeTitle(String dateString) {
         String[] dateParts = dateString.trim().split("-");
 
-        CharSequence dateStringOut = dateParts[2] + ". " + DATENAME_MAP.get(dateParts[1]);
-
-        return dateStringOut;
+        return dateParts[2] + ". " + DATENAME_MAP.get(dateParts[1]);
     }
 
 
     //Seab asukohtade fragmentide väärtused vastavalt spinneri valikule
     public static void setLocationValues(int locationIndex, View v) {
-
         TextView phenomenonDayView;
         TextView phenomenonNightView;
         TextView tempDayView;
@@ -131,8 +195,13 @@ public class SetViewValues {
         TextView temptextNightView;
         String phenomenonDay;
         String phenomenonNight;
+        String phenomenonDayEstonian;
+        String phenomenonNightEstonian;
         String tempMin;
         String tempMax;
+        ImageView imageDay;
+        ImageView imageNight;
+
 
         phenomenonDayView = (TextView) v.findViewById(R.id.locationPhenomenonDay_TextView);
         phenomenonNightView = (TextView) v.findViewById(R.id.locationPhenomenonNight_TextView);
@@ -140,19 +209,25 @@ public class SetViewValues {
         tempNightView = (TextView) v.findViewById(R.id.locationTempNight_TextView);
         temptextDayView = (TextView) v.findViewById(R.id.locationTemptextDay_TextView);
         temptextNightView = (TextView) v.findViewById(R.id.locationTemptextNight_TextView);
+        imageDay = (ImageView) v.findViewById(R.id.imageDay);
+        imageNight = (ImageView) v.findViewById(R.id.imageNight);
 
-        phenomenonDay = PHENOMENON_MAP.get(MainActivity.sRSSObj.getDates().get(0).getLocationDay().get(locationIndex)[0]);
+        phenomenonDay = MainActivity.sRSSObj.getDates().get(0).getLocationDay().get(locationIndex)[0];
+        phenomenonDayEstonian = PHENOMENON_MAP.get(phenomenonDay);
         tempMax = MainActivity.sRSSObj.getDates().get(0).getLocationDay().get(locationIndex)[1];
-        phenomenonNight = PHENOMENON_MAP.get(MainActivity.sRSSObj.getDates().get(0).getLocationNight().get(locationIndex)[0]);
+        phenomenonNight = MainActivity.sRSSObj.getDates().get(0).getLocationNight().get(locationIndex)[0];
+        phenomenonNightEstonian = PHENOMENON_MAP.get(phenomenonNight);
         tempMin = MainActivity.sRSSObj.getDates().get(0).getLocationNight().get(locationIndex)[1];
 
 
-        phenomenonDayView.setText(phenomenonDay);
-        phenomenonNightView.setText(phenomenonNight);
+        phenomenonDayView.setText(phenomenonDayEstonian);
+        phenomenonNightView.setText(phenomenonNightEstonian);
         tempDayView.setText(tempMax);
         tempNightView.setText(tempMin);
         temptextDayView.setText(NumbersToText.parse(Integer.parseInt(tempMax)) + " kraadi");
         temptextNightView.setText(NumbersToText.parse(Integer.parseInt(tempMin)) + " kraadi");
+
+        setWeatherPictures(imageDay, imageNight, phenomenonDay, phenomenonNight);
 
     }
 
@@ -168,11 +243,16 @@ public class SetViewValues {
         TextView windViewNight;
         String tempMin;
         String tempMax;
-        String phenomenon;
+        String phenomenonDay;
+        String phenomenonNight;
+        String phenomenonDayEstonian;
+        String phenomenonNightEstonian;
         String tempText;
         Location userLocation;
         double minDistance;
         int closestWindDataLocation;
+        ImageView imageDay;
+        ImageView imageNight;
 
         tempViewDay = (TextView) v.findViewById(R.id.tempDay_TextView);
         weathertextViewDay = (TextView) v.findViewById(R.id.phenomenonDay_TextView);
@@ -182,6 +262,8 @@ public class SetViewValues {
         temptextViewNight = (TextView) v.findViewById(R.id.temptextNight_TextView);
         windViewDay = (TextView) v.findViewById(R.id.windDay_TextView);
         windViewNight = (TextView) v.findViewById(R.id.windNight_TextView);
+        imageDay = (ImageView) v.findViewById(R.id.imageDay);
+        imageNight = (ImageView) v.findViewById(R.id.imageNight);
 
 
         if (date.getDate().equalsIgnoreCase(MainActivity.sRSSObj.getDates().get(0).getDate())) {
@@ -207,21 +289,32 @@ public class SetViewValues {
 
         tempMin = date.getDay().get("tempmin");
         tempMax = date.getDay().get("tempmax");
-        phenomenon = PHENOMENON_MAP.get(date.getDay().get("phenomenon"));
+        phenomenonDay = date.getDay().get("phenomenon");
+        phenomenonDayEstonian = PHENOMENON_MAP.get(phenomenonDay);
         tempText = NumbersToText.parse(Integer.parseInt(tempMin)) + " kuni " + NumbersToText.parse(Integer.parseInt(tempMax)) + " kraadi";
 
         tempViewDay.setText(tempMin + ".." + tempMax);
         temptextViewDay.setText(tempText);
-        weathertextViewDay.setText(phenomenon);
+        weathertextViewDay.setText(phenomenonDayEstonian);
 
         tempMin = date.getNight().get("tempmin");
         tempMax = date.getNight().get("tempmax");
-        phenomenon = PHENOMENON_MAP.get(date.getNight().get("phenomenon"));
+        phenomenonNight = date.getNight().get("phenomenon");
+        phenomenonNightEstonian = PHENOMENON_MAP.get(phenomenonNight);
 
         tempText = NumbersToText.parse(Integer.parseInt(tempMin)) + " kuni " + NumbersToText.parse(Integer.parseInt(tempMax)) + " kraadi";
 
         tempViewNight.setText(tempMin + ".." + tempMax);
         temptextViewNight.setText(tempText);
-        weatherTextViewNight.setText(phenomenon);
+        weatherTextViewNight.setText(phenomenonNightEstonian);
+
+        setWeatherPictures(imageDay, imageNight, phenomenonDay, phenomenonNight);
     }
+
+    private static void setWeatherPictures(ImageView imageDay, ImageView imageNight, String phenomenonDay, String phenomenonNight) {
+        imageDay.setImageResource(PHENOMENON_TO_IMAGE_MAP_DAY.get(phenomenonDay));
+        imageNight.setImageResource(PHENOMENON_TO_IMAGE_MAP_NIGHT.get(phenomenonNight));
+    }
+
+
 }
